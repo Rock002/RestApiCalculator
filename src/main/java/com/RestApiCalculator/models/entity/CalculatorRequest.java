@@ -29,4 +29,5 @@ public class CalculatorRequest {
     public void setSecond(double second) {
         this.second = second;
     }
+
 }
