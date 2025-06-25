@@ -5,4 +5,4 @@ public record AnswerDto (
         double second,
         String operation,
         double answer
-) {}
+) { }

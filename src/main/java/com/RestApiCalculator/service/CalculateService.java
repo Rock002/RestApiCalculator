@@ -22,5 +22,4 @@ public class CalculateService {
         }
         return 0;
     }
-
 }
