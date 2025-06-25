@@ -38,4 +38,5 @@ public class mainController {
         );
         return "redirect:/api/" + Double.toString(answer);
     }
+
 }
