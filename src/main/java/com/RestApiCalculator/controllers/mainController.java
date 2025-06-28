@@ -2,6 +2,7 @@ package com.RestApiCalculator.controllers;
 
 import com.RestApiCalculator.models.entity.CalculatorRequest;
 import com.RestApiCalculator.service.CalculateService;
+import com.RestApiCalculator.service.CalculatorRequestService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,10 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class mainController {
 
     private final CalculateService calculateService;
+    private final CalculatorRequestService calculatorRequestService;
 
-    public mainController(CalculateService calculateService) {
+    public mainController(CalculateService calculateService, CalculatorRequestService calculatorRequestService) {
         this.calculateService = calculateService;
+        this.calculatorRequestService = calculatorRequestService;
     }
+
 
     @GetMapping("/api/{answer}")
     public String mainPage(@PathVariable double answer, Model model) {
@@ -31,6 +35,8 @@ public class mainController {
 
     @PostMapping("/api/postresult")
     public String answer(CalculatorRequest request) {
+        calculatorRequestService.saveOperation(request);
+
         double answer = calculateService.calculateResult(
                 request.getFirst(),
                 request.getSecond(),
