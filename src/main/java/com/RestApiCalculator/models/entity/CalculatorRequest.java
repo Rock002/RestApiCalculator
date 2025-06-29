@@ -24,9 +24,17 @@ public class CalculatorRequest {
     private String operation;
     @Column(name = "result")
     private double result;
-    @Column(name = "user1")
+    @Column(name = "user_1")
     @ManyToOne
-    private Users user;
+    private User user;
+
+    public Long getId() {
+        return id;
+    }
+
+    public User getUser() {
+        return user;
+    }
 
     public double getResult() {
         return result;
@@ -58,5 +66,13 @@ public class CalculatorRequest {
 
     public void setSecond(double second) {
         this.second = second;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -1,8 +1,12 @@
 package com.RestApiCalculator.controllers;
 
 import com.RestApiCalculator.models.entity.CalculatorRequest;
+import com.RestApiCalculator.models.entity.User;
 import com.RestApiCalculator.service.CalculateService;
 import com.RestApiCalculator.service.CalculatorRequestService;
+import com.RestApiCalculator.service.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,10 +18,12 @@ public class mainController {
 
     private final CalculateService calculateService;
     private final CalculatorRequestService calculatorRequestService;
+    private final UserService userService;
 
-    public mainController(CalculateService calculateService, CalculatorRequestService calculatorRequestService) {
+    public mainController(CalculateService calculateService, CalculatorRequestService calculatorRequestService, UserService userService) {
         this.calculateService = calculateService;
         this.calculatorRequestService = calculatorRequestService;
+        this.userService = userService;
     }
 
 
@@ -34,13 +40,17 @@ public class mainController {
     }
 
     @PostMapping("/api/postresult")
-    public String answer(CalculatorRequest request) {
+    public String answer(CalculatorRequest request, Authentication authentication) {
         double answer = calculateService.calculateResult(
                 request.getFirst(),
                 request.getSecond(),
                 request.getOperation()
         );
         request.setResult(answer);
+        String username = authentication.getName();
+        User currentUser = userService.getUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("not found"));
+        request.setUser(currentUser);
         calculatorRequestService.saveOperation(request);
         return "redirect:/api/" + Double.toString(answer);
     }
