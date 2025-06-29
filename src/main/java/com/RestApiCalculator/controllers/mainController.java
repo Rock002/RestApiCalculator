@@ -27,7 +27,10 @@ public class mainController {
         this.userService = userService;
     }
 
-
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login";
+    }
     @GetMapping("/api/{answer}")
     public String mainPage(@PathVariable double answer, Model model) {
         model.addAttribute("answer", answer);
