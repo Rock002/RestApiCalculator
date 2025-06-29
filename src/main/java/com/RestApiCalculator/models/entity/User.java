@@ -22,6 +22,8 @@ public class User {
     private String username;
     @Column(name = "password")
     private String password;
+    @Column(name = "roles")
+    private String roles;
     @Column(name = "history")
     @OneToMany
     private List<CalculatorRequest> history;
@@ -36,6 +38,10 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getRoles() {
+        return roles;
     }
 
     public List<CalculatorRequest> getHistory() {
@@ -56,5 +62,9 @@ public class User {
 
     public void setHistory(List<CalculatorRequest> history) {
         this.history = history;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 }

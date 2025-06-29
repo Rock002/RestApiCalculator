@@ -5,6 +5,7 @@ import com.RestApiCalculator.models.entity.User;
 import com.RestApiCalculator.service.CalculateService;
 import com.RestApiCalculator.service.CalculatorRequestService;
 import com.RestApiCalculator.service.UserService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
@@ -39,6 +40,18 @@ public class mainController {
         return "main";
     }
 
+    @GetMapping("/registration")
+    public String registrationPage() {
+        return "register";
+    }
+
+    @PostMapping("/postregistration")
+    public String postregistrationPage(User user) {
+        user.setRoles("USER");
+        userService.saveUser(user);
+        return "redirect:/api";
+    }
+
     @PostMapping("/api/postresult")
     public String answer(CalculatorRequest request, Authentication authentication) {
         double answer = calculateService.calculateResult(
@@ -48,7 +61,7 @@ public class mainController {
         );
         request.setResult(answer);
         String username = authentication.getName();
-        User currentUser = userService.getUserByUsername(username)
+        User currentUser = calculatorRequestService.getUserByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("not found"));
         request.setUser(currentUser);
         calculatorRequestService.saveOperation(request);

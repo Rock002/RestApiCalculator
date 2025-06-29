@@ -7,6 +7,7 @@ import com.RestApiCalculator.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CalculatorRequestService {
@@ -24,5 +25,9 @@ public class CalculatorRequestService {
 
     public List<CalculatorRequest> listOfRequstsByUser(User user) {
         return calculatorRequestRepository.findByUser(user);
+    }
+
+    public Optional<User> getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 }

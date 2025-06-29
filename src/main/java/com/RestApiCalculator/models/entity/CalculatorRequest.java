@@ -24,8 +24,8 @@ public class CalculatorRequest {
     private String operation;
     @Column(name = "result")
     private double result;
-    @Column(name = "user_1")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn
     private User user;
 
     public Long getId() {

@@ -33,7 +33,7 @@ public class MainRestController {
     @GetMapping("/history")
     public List<AnswerDto> historyOfRequests (Authentication authentication) {
         String username = authentication.getName();
-        User currentUser = userService.getUserByUsername(username)
+        User currentUser = calculatorRequestService.getUserByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("not found"));
         List<CalculatorRequest> history =  calculatorRequestService
                 .listOfRequstsByUser(currentUser);
