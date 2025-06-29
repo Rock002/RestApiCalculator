@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "calculator_request")
 public class CalculatorRequest {
 
     @Id
@@ -23,6 +24,9 @@ public class CalculatorRequest {
     private String operation;
     @Column(name = "result")
     private double result;
+    @Column(name = "user1")
+    @ManyToOne
+    private Users user;
 
     public double getResult() {
         return result;

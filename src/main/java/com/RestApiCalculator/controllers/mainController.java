@@ -35,13 +35,13 @@ public class mainController {
 
     @PostMapping("/api/postresult")
     public String answer(CalculatorRequest request) {
-        calculatorRequestService.saveOperation(request);
-
         double answer = calculateService.calculateResult(
                 request.getFirst(),
                 request.getSecond(),
                 request.getOperation()
         );
+        request.setResult(answer);
+        calculatorRequestService.saveOperation(request);
         return "redirect:/api/" + Double.toString(answer);
     }
 }
