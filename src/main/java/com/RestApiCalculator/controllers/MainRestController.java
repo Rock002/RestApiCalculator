@@ -1,6 +1,7 @@
 package com.RestApiCalculator.controllers;
 
 import com.RestApiCalculator.models.dto.AnswerDto;
+import com.RestApiCalculator.models.dto.UserDto;
 import com.RestApiCalculator.models.entity.CalculatorRequest;
 import com.RestApiCalculator.models.entity.User;
 import com.RestApiCalculator.service.CalculateService;
@@ -49,4 +50,17 @@ public class MainRestController {
         }
         return resultHistory;
     }
+
+    @GetMapping("/profile")
+    public UserDto userProfile(Authentication authentication) {
+        User currentUser = calculatorRequestService.getUserByUsername(authentication.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("not found"));
+        UserDto user = new UserDto(
+                currentUser.getUsername(),
+                currentUser.getPassword(),
+                currentUser.getRoles()
+        );
+        return user;
+    }
+
 }

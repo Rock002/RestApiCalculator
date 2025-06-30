@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+
 @Controller
 public class mainController {
 
@@ -31,6 +32,7 @@ public class mainController {
     public String loginPage() {
         return "login";
     }
+
     @GetMapping("/api/{answer}")
     public String mainPage(@PathVariable double answer, Model model) {
         model.addAttribute("answer", answer);
